@@ -29,7 +29,7 @@
 			    <div id="header-nav-left">
 			        <div class="user-account-btn dropdown">
 			            <a href="#" title="My Account" class="user-profile clearfix" data-toggle="dropdown">
-			                <img width="28" src="../../assets/image-resources/gravatar.jpg" alt="Profile image">
+			                <img width="28" src="<?php echo base_url('assets/image-resources/gravatar.jpg')?>" alt="Profile image">
 			                <span>Thomas Barnes</span>
 			                <i class="glyph-icon icon-angle-down"></i>
 			            </a>
@@ -38,7 +38,7 @@
 			                    <div class="login-box clearfix">
 			                        <div class="user-img">
 			                            <a href="#" title="" class="change-img">Change photo</a>
-			                            <img src="../../assets/image-resources/gravatar.jpg" alt="">
+			                            <img src="<?php echo base_url('assets/image-resources/gravatar.jpg')?>" alt="">
 			                        </div>
 			                        <div class="user-info">
 			                            <span>
@@ -116,4 +116,58 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Bootstrap Dropdown -->
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/dropdown/dropdown.js')?>"></script>
+	<!-- Bootstrap Tooltip -->
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/tooltip/tooltip.js')?>"></script>
+	<!-- Bootstrap Popover -->
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/popover/popover.js')?>"></script>
+	<!-- Bootstrap Progress Bar -->
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/progressbar/progressbar.js')?>"></script>
+	<!-- Bootstrap Buttons -->
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/button/button.js')?>"></script>
+	<!-- Bootstrap Collapse -->
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/collapse/collapse.js')?>"></script>
+	<!-- Superclick -->
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/superclick/superclick.js')?>"></script>
+	<!-- Input switch alternate -->
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/input-switch/inputswitch-alt.js')?>"></script>
+	<!-- Slim scroll -->
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/slimscroll/slimscroll.js')?>"></script>
+	<!-- Slidebars -->
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/slidebars/slidebars.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/slidebars/slidebars-demo.js')?>"></script>
+	<!-- PieGage -->
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/charts/piegage/piegage.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/charts/piegage/piegage-demo.js')?>"></script>
+	<!-- Screenfull -->
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/screenfull/screenfull.js')?>"></script>
+	<!-- Content box -->
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/content-box/contentbox.js')?>"></script>
+	<!-- Overlay -->
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/overlay/overlay.js')?>"></script>
+	<!-- Widgets init for demo -->
+	<script type="text/javascript" src="<?php echo base_url('assets/js-init/widgets-init.js')?>"></script>
+	<!-- Theme layout -->
+	<script type="text/javascript" src="<?php echo base_url('assets/themes/admin/layout.js')?>"></script>
+	<!-- Theme switcher -->
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/theme-switcher/themeswitcher.js')?>"></script>
+	
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/datatable/datatable.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/datatable/datatable-bootstrap.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/datatable/datatable-responsive.js')?>"></script>
+
+	<script type="text/javascript">
+	    /* Datatables responsive */
+	    $(document).ready(function() {
+	        $('#datatable-responsive').DataTable( {
+	            responsive: true
+	        } );
+	    } );
+	    $(document).ready(function() {
+	        $('.dataTables_filter input').attr("placeholder", "Search...");
+	    });
+	</script>
+
 </body>
