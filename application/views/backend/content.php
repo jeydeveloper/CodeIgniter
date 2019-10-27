@@ -30,7 +30,7 @@
 			        <div class="user-account-btn dropdown">
 			            <a href="#" title="My Account" class="user-profile clearfix" data-toggle="dropdown">
 			                <img width="28" src="<?php echo base_url('assets/image-resources/gravatar.jpg')?>" alt="Profile image">
-			                <span>Thomas Barnes</span>
+			                <span>Cool Admin</span>
 			                <i class="glyph-icon icon-angle-down"></i>
 			            </a>
 			            <div class="dropdown-menu float-left">
@@ -42,7 +42,7 @@
 			                        </div>
 			                        <div class="user-info">
 			                            <span>
-			                                Thomas Barnes
+			                                Cool Admin
 			                                <i>UX/UI developer</i>
 			                            </span>
 			                            <a href="#" title="Edit profile">Edit profile</a>
@@ -89,11 +89,47 @@
 			<div id="page-sidebar">
 				<div class="scroll-sidebar">
 					<ul id="sidebar-menu">
-						<li class="header"><span>Overview</span></li>
+						<li class="header"><span>Module</span></li>
 					    <li>
-					        <a href="index.html" title="Admin Dashboard">
+					        <a href="#" title="User">
 					            <i class="glyph-icon icon-linecons-tv"></i>
-					            <span>Admin dashboard</span>
+					            <span>User</span>
+					        </a>
+					    </li>
+					    <li>
+					        <a href="#" title="Artikel">
+					            <i class="glyph-icon icon-linecons-tv"></i>
+					            <span>Artikel</span>
+					        </a>
+					    </li>
+					    <li>
+					        <a href="#" title="Image Galeri">
+					            <i class="glyph-icon icon-linecons-tv"></i>
+					            <span>Image Galeri</span>
+					        </a>
+					    </li>
+					    <li>
+					        <a href="#" title="Menu">
+					            <i class="glyph-icon icon-linecons-tv"></i>
+					            <span>Menu</span>
+					        </a>
+					    </li>
+					    <li>
+					        <a href="#" title="Slide">
+					            <i class="glyph-icon icon-linecons-tv"></i>
+					            <span>Slide</span>
+					        </a>
+					    </li>
+					    <li>
+					        <a href="#" title="Submenu">
+					            <i class="glyph-icon icon-linecons-tv"></i>
+					            <span>Submenu</span>
+					        </a>
+					    </li>
+					    <li>
+					        <a href="#" title="Video Galeri">
+					            <i class="glyph-icon icon-linecons-tv"></i>
+					            <span>Video Galeri</span>
 					        </a>
 					    </li>
 					</ul>
@@ -153,7 +189,7 @@
 	<script type="text/javascript" src="<?php echo base_url('assets/themes/admin/layout.js')?>"></script>
 	<!-- Theme switcher -->
 	<script type="text/javascript" src="<?php echo base_url('assets/widgets/theme-switcher/themeswitcher.js')?>"></script>
-	
+
 	<script type="text/javascript" src="<?php echo base_url('assets/widgets/datatable/datatable.js')?>"></script>
 	<script type="text/javascript" src="<?php echo base_url('assets/widgets/datatable/datatable-bootstrap.js')?>"></script>
 	<script type="text/javascript" src="<?php echo base_url('assets/widgets/datatable/datatable-responsive.js')?>"></script>
