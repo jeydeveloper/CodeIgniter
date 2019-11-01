@@ -91,43 +91,43 @@
 					<ul id="sidebar-menu">
 						<li class="header"><span>Module</span></li>
 					    <li>
-					        <a href="#" title="User">
+					        <a href="<?php echo base_url('backend/Backend_user')?>" title="User">
 					            <i class="glyph-icon icon-linecons-tv"></i>
 					            <span>User</span>
 					        </a>
 					    </li>
 					    <li>
-					        <a href="#" title="Artikel">
+					        <a href="<?php echo base_url('backend/Backend_artikel')?>" title="Artikel">
 					            <i class="glyph-icon icon-linecons-tv"></i>
 					            <span>Artikel</span>
 					        </a>
 					    </li>
 					    <li>
-					        <a href="#" title="Image Galeri">
+					        <a href="<?php echo base_url('backend/Backend_imagegaleri')?>" title="Image Galeri">
 					            <i class="glyph-icon icon-linecons-tv"></i>
 					            <span>Image Galeri</span>
 					        </a>
 					    </li>
 					    <li>
-					        <a href="#" title="Menu">
+					        <a href="<?php echo base_url('backend/Backend_menu')?>" title="Menu">
 					            <i class="glyph-icon icon-linecons-tv"></i>
 					            <span>Menu</span>
 					        </a>
 					    </li>
 					    <li>
-					        <a href="#" title="Slide">
+					        <a href="<?php echo base_url('backend/Backend_slide')?>" title="Slide">
 					            <i class="glyph-icon icon-linecons-tv"></i>
 					            <span>Slide</span>
 					        </a>
 					    </li>
 					    <li>
-					        <a href="#" title="Submenu">
+					        <a href="<?php echo base_url('backend/Backend_submenu')?>" title="Submenu">
 					            <i class="glyph-icon icon-linecons-tv"></i>
 					            <span>Submenu</span>
 					        </a>
 					    </li>
 					    <li>
-					        <a href="#" title="Video Galeri">
+					        <a href="<?php echo base_url('backend/Backend_videogaleri')?>" title="Video Galeri">
 					            <i class="glyph-icon icon-linecons-tv"></i>
 					            <span>Video Galeri</span>
 					        </a>
@@ -137,17 +137,7 @@
 			</div>
 			<div id="page-content-wrapper">
 				<div id="page-content">
-					<div id="page-title">
-						<h2>Responsive data tables</h2>
-    					<p>Tables with a lot of advanced, easy to use features and options.</p>
-					</div>
-					<div class="panel">
-						<div class="panel-body">
-							<h3 class="title-hero">
-							    Responsive data tables
-							</h3>
-						</div>
-					</div>
+					<?php echo $page_content; ?>
 				</div>
 			</div>
 		</div>
@@ -189,21 +179,12 @@
 	<script type="text/javascript" src="<?php echo base_url('assets/themes/admin/layout.js')?>"></script>
 	<!-- Theme switcher -->
 	<script type="text/javascript" src="<?php echo base_url('assets/widgets/theme-switcher/themeswitcher.js')?>"></script>
-
 	<script type="text/javascript" src="<?php echo base_url('assets/widgets/datatable/datatable.js')?>"></script>
 	<script type="text/javascript" src="<?php echo base_url('assets/widgets/datatable/datatable-bootstrap.js')?>"></script>
 	<script type="text/javascript" src="<?php echo base_url('assets/widgets/datatable/datatable-responsive.js')?>"></script>
-
-	<script type="text/javascript">
-	    /* Datatables responsive */
-	    $(document).ready(function() {
-	        $('#datatable-responsive').DataTable( {
-	            responsive: true
-	        } );
-	    } );
-	    $(document).ready(function() {
-	        $('.dataTables_filter input').attr("placeholder", "Search...");
-	    });
-	</script>
-
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/modal/modal.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/jgrowl-notifications/jgrowl.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/jgrowl-notifications/jgrowl-demo.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('assets/widgets/parsley/parsley.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('assets/js-init/custom-init.js')?>"></script>
 </body>
