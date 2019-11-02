@@ -10,60 +10,102 @@ class Menu extends REST_Controller {
     function __construct($config = 'rest') {
         parent::__construct($config);
         $this->load->database();
+
+        $this->load->model('menu_model');
     }
 
     function index_get() { //get data menu
-        $id = $this->get('id_menu');
-        if ($id == '') {
-            $kontak = $this->db->get('menu')->result();
+        $id = $this->get('id');
+        $search = $this->get('search');
+        $columns = $this->get('columns');
+        $start = !empty($this->get('start')) ? $this->get('start') : 0;
+        $length = !empty($this->get('length')) ? $this->get('length') : 10;
+        $arr = [
+        	'no',
+        	'nama_menu',
+        	'style_menu',
+        	'position_menu',
+        	'action',
+        ];
+        if (!empty($id)) {
+        	$this->menu_model->where('id_menu = "'.$id.'"');
+            $menu = $this->menu_model->get_row();
+        } elseif (!empty($search['value'])) {
+        	$all = $this->menu_model->get_all();
+        	foreach ($columns as $key => $value) {
+        		if($value['searchable'] == 'true') {
+        			$this->menu_model->or_like($arr[$key], $search['value']);
+        		}
+        	}
+        	$this->menu_model->set_limit($length, $start);
+            $menu = $this->menu_model->get_all();
+            $menu = $this->getRowDatatable($menu);
+            $menu = formatDatatable($menu, $all);
         } else {
-            $this->db->where('id_menu', $id);
-            $kontak = $this->db->get('menu')->result();
+            $all = $this->menu_model->get_all();
+        	$this->menu_model->set_limit($length, $start);
+            $menu = $this->menu_model->get_all();
+            $menu = $this->getRowDatatable($menu);
+            $menu = formatDatatable($menu, $all);
         }
-        $this->response($kontak, 200);
+        $this->response($menu, 200);
     }
 
     function index_post() { // post data menu
        	$data = array(
-		   'id_menu' => $this->post('id_menu'),
 		   'nama_menu' => $this->post('nama_menu'),
 		   'style_menu' => $this->post('style_menu'),
 		   'position_menu' => $this->post('position_menu'),
 		);
-		$insert = $this->db->insert('menu', $data);
+		$insert = $this->menu_model->insert($data);
 		if ($insert) {
-		   $this->response($data, 200);
+		   $this->response(array('status' => 'success'), 200);
 		} else {
 		   $this->response(array('status' => 'fail', 502));
 		}
    	}
 
-   	function index_put() { // update data kontak
-		$id = $this->put('id_menu');
+   	function index_put() { // update data menu
+		$id = $this->put('id');
 		$data = array(
-			'id_menu' => $this->put('id_menu'),
 			'nama_menu' => $this->put('nama_menu'),
 		   	'style_menu' => $this->put('style_menu'),
 		   	'position_menu' => $this->put('position_menu'),
 		);
-		$this->db->where('id_menu', $id);
-		$update = $this->db->update('menu', $data);
+		$this->menu_model->where('id_menu = "'.$id.'"');
+		$update = $this->menu_model->update($data);
 		if ($update) {
-			$this->response($data, 200);
+			$this->response(array('status' => 'success'), 200);
 		} else {
 			$this->response(array('status' => 'fail', 502));
 		}
  	}
 
 	function index_delete() { // delete data menu
-		$id = $this->delete('id_menu');
-		$this->db->where('id_menu', $id);
-		$delete = $this->db->delete('menu');
+		$id = $this->delete('id');
+		$this->menu_model->where('id_menu = "'.$id.'"');
+		$delete = $this->menu_model->delete();
 		if ($delete) {
 		    $this->response(array('status' => 'success'), 201);
 		} else {
 		    $this->response(array('status' => 'fail', 502));
 		}
+	}
+
+	private function getRowDatatable($data = null) {
+		$ret = [];
+		$start = $this->get('start');
+		foreach ($data as $key => $value) {
+			$start += 1;
+			$ret[$key] = [
+				$start,
+				$value->nama_menu,
+				$value->style_menu,
+				$value->position_menu,
+				'<a onclick="doFormEdit('.$value->id_menu.');return false;" href="#" class="btn btn-xs btn-success">EDIT <i class="glyph-icon icon-pencil-square-o"></i></a> <a onclick="showModalBoxDelete('.$value->id_menu.');return false;" href="#" class="btn btn-xs btn-danger">DELETE <i class="glyph-icon icon-close"></i></a>',
+			];
+		}
+		return $ret;
 	}
 
 }
