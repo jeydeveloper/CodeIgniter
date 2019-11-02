@@ -38,11 +38,13 @@ class User extends REST_Controller {
         	}
         	$this->user_model->set_limit($length, $start);
             $user = $this->user_model->get_all();
+            $user = $this->getRowDatatable($user);
             $user = formatDatatable($user, $all);
         } else {
             $all = $this->user_model->get_all();
         	$this->user_model->set_limit($length, $start);
             $user = $this->user_model->get_all();
+            $user = $this->getRowDatatable($user);
             $user = formatDatatable($user, $all);
         }
         $this->response($user, 200);
@@ -87,6 +89,21 @@ class User extends REST_Controller {
 		} else {
 		    $this->response(array('status' => 'fail', 502));
 		}
+	}
+
+	private function getRowDatatable($data = null) {
+		$ret = [];
+		$start = $this->get('start');
+		foreach ($data as $key => $value) {
+			$start += 1;
+			$ret[$key] = [
+				$start,
+				$value->nama,
+				$value->email,
+				'<a onclick="doFormEdit('.$value->id.');return false;" href="#" class="btn btn-xs btn-success">EDIT <i class="glyph-icon icon-pencil-square-o"></i></a> <a onclick="showModalBoxDelete('.$value->id.');return false;" href="#" class="btn btn-xs btn-danger">DELETE <i class="glyph-icon icon-close"></i></a>',
+			];
+		}
+		return $ret;
 	}
 
 }
