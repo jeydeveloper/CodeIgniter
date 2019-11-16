@@ -10,60 +10,108 @@ class Image_galeri extends REST_Controller {
     function __construct($config = 'rest') {
         parent::__construct($config);
         $this->load->database();
+
+        $this->load->model('imagegaleri_model');
     }
 
-    function index_get() { //get data image_galeri
-        $id = $this->get('id_image_galeri');
-        if ($id == '') {
-            $kontak = $this->db->get('image_galeri')->result();
+    function index_get() { //get data menu
+        $id = $this->get('id');
+        $search = $this->get('search');
+        $columns = $this->get('columns');
+        $start = !empty($this->get('start')) ? $this->get('start') : 0;
+        $length = !empty($this->get('length')) ? $this->get('length') : 10;
+        $arr = [
+        	'no',
+        	'nama_image_galeri',
+        	'url_image_galeri',
+        	'keterangan_image_galeri',
+        	'action',
+        ];
+        if (!empty($id)) {
+        	$this->imagegaleri_model->where('id_image_galeri = "'.$id.'"');
+            $imagegaleri = $this->imagegaleri_model->get_row();
+        } elseif (!empty($search['value'])) {
+        	$all = $this->imagegaleri_model->get_all();
+        	foreach ($columns as $key => $value) {
+        		if($value['searchable'] == 'true') {
+        			$this->imagegaleri_model->or_like($arr[$key], $search['value']);
+        		}
+        	}
+        	$filtered = $this->imagegaleri_model->get_all();
+        	foreach ($columns as $key => $value) {
+        		if($value['searchable'] == 'true') {
+        			$this->imagegaleri_model->or_like($arr[$key], $search['value']);
+        		}
+        	}
+        	$this->imagegaleri_model->set_limit($length, $start);
+            $imagegaleri = $this->imagegaleri_model->get_all();
+            $imagegaleri = $this->getRowDatatable($imagegaleri);
+            $imagegaleri = formatDatatable($imagegaleri, $all, $filtered);
         } else {
-            $this->db->where('id_image_galeri', $id);
-            $kontak = $this->db->get('image_galeri')->result();
+            $all = $this->imagegaleri_model->get_all();
+        	$this->imagegaleri_model->set_limit($length, $start);
+            $imagegaleri = $this->imagegaleri_model->get_all();
+            $imagegaleri = $this->getRowDatatable($imagegaleri);
+            $imagegaleri = formatDatatable($imagegaleri, $all, $all);
         }
-        $this->response($kontak, 200);
+        $this->response($imagegaleri, 200);
     }
 
-    function index_post() { // post data image_galeri
+    function index_post() { // post data menu
        	$data = array(
-		   'id_image_galeri' => $this->post('id_image_galeri'),
 		   'nama_image_galeri' => $this->post('nama_image_galeri'),
 		   'url_image_galeri' => $this->post('url_image_galeri'),
 		   'keterangan_image_galeri' => $this->post('keterangan_image_galeri'),
 		);
-		$insert = $this->db->insert('image_galeri', $data);
+		$insert = $this->imagegaleri_model->insert($data);
 		if ($insert) {
-		   $this->response($data, 200);
+		   $this->response(array('status' => 'success'), 200);
 		} else {
 		   $this->response(array('status' => 'fail', 502));
 		}
    	}
 
-   	function index_put() { // update data kontak
-		$id = $this->put('id_image_galeri');
+   	function index_put() { // update data menu
+		$id = $this->put('id');
 		$data = array(
-			'id_image_galeri' => $this->put('id_image_galeri'),
 			'nama_image_galeri' => $this->put('nama_image_galeri'),
 		   	'url_image_galeri' => $this->put('url_image_galeri'),
 		   	'keterangan_image_galeri' => $this->put('keterangan_image_galeri'),
 		);
-		$this->db->where('id_image_galeri', $id);
-		$update = $this->db->update('image_galeri', $data);
+		$this->imagegaleri_model->where('id_image_galeri = "'.$id.'"');
+		$update = $this->imagegaleri_model->update($data);
 		if ($update) {
-			$this->response($data, 200);
+			$this->response(array('status' => 'success'), 200);
 		} else {
 			$this->response(array('status' => 'fail', 502));
 		}
  	}
 
-	function index_delete() { // delete data image_galeri
-		$id = $this->delete('id_image_galeri');
-		$this->db->where('id_image_galeri', $id);
-		$delete = $this->db->delete('image_galeri');
+	function index_delete() { // delete data menu
+		$id = $this->delete('id');
+		$this->imagegaleri_model->where('id_image_galeri = "'.$id.'"');
+		$delete = $this->imagegaleri_model->delete();
 		if ($delete) {
 		    $this->response(array('status' => 'success'), 201);
 		} else {
 		    $this->response(array('status' => 'fail', 502));
 		}
+	}
+
+	private function getRowDatatable($data = null) {
+		$ret = [];
+		$start = $this->get('start');
+		foreach ($data as $key => $value) {
+			$start += 1;
+			$ret[$key] = [
+				$start,
+				$value->nama_image_galeri,
+				$value->url_image_galeri,
+				$value->keterangan_image_galeri,
+				'<a onclick="doFormEdit('.$value->id_image_galeri.');return false;" href="#" class="btn btn-xs btn-success">EDIT <i class="glyph-icon icon-pencil-square-o"></i></a> <a onclick="showModalBoxDelete('.$value->id_image_galeri.');return false;" href="#" class="btn btn-xs btn-danger">DELETE <i class="glyph-icon icon-close"></i></a>',
+			];
+		}
+		return $ret;
 	}
 
 }
