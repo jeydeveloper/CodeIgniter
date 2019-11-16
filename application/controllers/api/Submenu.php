@@ -32,7 +32,7 @@ class Submenu extends REST_Controller {
         ];
         if (!empty($id)) {
         	$this->submenu_model->where('id_sub_menu = "'.$id.'"');
-            $menu = $this->submenu_model->get_row();
+            $submenu = $this->submenu_model->get_row();
         } elseif (!empty($search['value'])) {
         	$all = $this->submenu_model->get_all();
         	foreach ($columns as $key => $value) {
@@ -40,18 +40,24 @@ class Submenu extends REST_Controller {
         			$this->submenu_model->or_like($arr[$key], $search['value']);
         		}
         	}
+        	$filtered = $this->submenu_model->get_all();
+        	foreach ($columns as $key => $value) {
+        		if($value['searchable'] == 'true') {
+        			$this->submenu_model->or_like($arr[$key], $search['value']);
+        		}
+        	}
         	$this->submenu_model->set_limit($length, $start);
-            $menu = $this->submenu_model->get_all();
-            $menu = $this->getRowDatatable($menu);
-            $menu = formatDatatable($menu, $all);
+            $submenu = $this->submenu_model->get_all();
+            $submenu = $this->getRowDatatable($submenu);
+            $submenu = formatDatatable($submenu, $all, $filtered);
         } else {
             $all = $this->submenu_model->get_all();
         	$this->submenu_model->set_limit($length, $start);
-            $menu = $this->submenu_model->get_all();
-            $menu = $this->getRowDatatable($menu);
-            $menu = formatDatatable($menu, $all);
+            $submenu = $this->submenu_model->get_all();
+            $submenu = $this->getRowDatatable($submenu);
+            $submenu = formatDatatable($submenu, $all, $all);
         }
-        $this->response($menu, 200);
+        $this->response($submenu, 200);
     }
 
     function index_post() { // post data menu

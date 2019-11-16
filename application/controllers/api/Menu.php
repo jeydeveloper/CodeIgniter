@@ -37,16 +37,22 @@ class Menu extends REST_Controller {
         			$this->menu_model->or_like($arr[$key], $search['value']);
         		}
         	}
+        	$filtered = $this->menu_model->get_all();
+        	foreach ($columns as $key => $value) {
+        		if($value['searchable'] == 'true') {
+        			$this->menu_model->or_like($arr[$key], $search['value']);
+        		}
+        	}
         	$this->menu_model->set_limit($length, $start);
             $menu = $this->menu_model->get_all();
             $menu = $this->getRowDatatable($menu);
-            $menu = formatDatatable($menu, $all);
+            $menu = formatDatatable($menu, $all, $filtered);
         } else {
             $all = $this->menu_model->get_all();
         	$this->menu_model->set_limit($length, $start);
             $menu = $this->menu_model->get_all();
             $menu = $this->getRowDatatable($menu);
-            $menu = formatDatatable($menu, $all);
+            $menu = formatDatatable($menu, $all, $all);
         }
         $this->response($menu, 200);
     }

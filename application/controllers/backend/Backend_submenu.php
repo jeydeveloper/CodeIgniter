@@ -50,6 +50,10 @@ class Backend_submenu extends CI_Controller {
 				'title_header_column' 	=> 'Link',
 			    'no_order'				=> 6,
 			),
+			array(
+				'title_header_column' 	=> 'Action',
+			    'no_order'				=> 7,
+			),
 		);
 
 		return $column_list;

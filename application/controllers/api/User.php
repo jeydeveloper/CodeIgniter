@@ -36,16 +36,22 @@ class User extends REST_Controller {
         			$this->user_model->or_like($arr[$key], $search['value']);
         		}
         	}
+        	$filtered = $this->user_model->get_all();
+        	foreach ($columns as $key => $value) {
+        		if($value['searchable'] == 'true') {
+        			$this->user_model->or_like($arr[$key], $search['value']);
+        		}
+        	}
         	$this->user_model->set_limit($length, $start);
             $user = $this->user_model->get_all();
             $user = $this->getRowDatatable($user);
-            $user = formatDatatable($user, $all);
+            $user = formatDatatable($user, $all, $filtered);
         } else {
             $all = $this->user_model->get_all();
         	$this->user_model->set_limit($length, $start);
             $user = $this->user_model->get_all();
             $user = $this->getRowDatatable($user);
-            $user = formatDatatable($user, $all);
+            $user = formatDatatable($user, $all, $all);
         }
         $this->response($user, 200);
     }

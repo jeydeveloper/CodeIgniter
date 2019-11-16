@@ -39,21 +39,39 @@
 	        	<div class="form-group">
 	                <label class="col-sm-3 control-label">Nama</label>
 	                <div class="col-sm-6">
-	                	<input name="nama_menu" id="nama_menu" type="text" class="form-control" placeholder="Nama..." />
+	                	<input name="nama_sub_menu" id="nama_sub_menu" type="text" class="form-control" placeholder="Nama..." />
+	                </div>
+	            </div>
+	            <div class="form-group">
+	                <label class="col-sm-3 control-label">ID Menu</label>
+	                <div class="col-sm-6">
+	                	<input name="id_menu" id="id_menu" type="text" class="form-control" placeholder="ID menu..." />
 	                </div>
 	            </div>
 	            <div class="form-group">
 	                <label class="col-sm-3 control-label">Style</label>
 	                <div class="col-sm-6">
-	                	<input name="style_menu" id="style_menu" type="text" class="form-control" placeholder="Style..." />
+	                	<input name="style_sub_menu" id="style_sub_menu" type="text" class="form-control" placeholder="Style..." />
 	                </div>
 	            </div>
-	            <div class="form-group">
-	                <label class="col-sm-3 control-label">Position</label>
-	                <div class="col-sm-6">
-	                	<input name="position_menu" id="position_menu" type="text" class="form-control" placeholder="Position..." />
-	                </div>
-	            </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Position</label>
+                    <div class="col-sm-6">
+                        <input name="position_sub_menu" id="position_sub_menu" type="text" class="form-control" placeholder="Position..." />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Group</label>
+                    <div class="col-sm-6">
+                        <input name="grup_sub_menu" id="grup_sub_menu" type="text" class="form-control" placeholder="Group..." />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Link</label>
+                    <div class="col-sm-6">
+                        <input name="link" id="link" type="text" class="form-control" placeholder="Link..." />
+                    </div>
+                </div>
 	            <div class="bg-default content-box text-center pad20A mrg25T">
 	                <button class="btn btn-success" id="dynamic_btn_process">Process</button>
 	                <button type="reset" class="btn btn-primary">Reset</button>
@@ -180,17 +198,23 @@ function doFormEdit(rowid) {
 }
 
 function fillFormData(data) {
-	$('#id').val(data.id_menu);
-	$('#nama_menu').val(data.nama_menu);
-	$('#style_menu').val(data.style_menu);
-	$('#position_menu').val(data.position_menu);
+	$('#id').val(data.id_sub_menu);
+	$('#nama_sub_menu').val(data.nama_sub_menu);
+	$('#id_menu').val(data.id_menu);
+    $('#style_sub_menu').val(data.style_sub_menu);
+    $('#position_sub_menu').val(data.position_sub_menu);
+    $('#grup_sub_menu').val(data.grup_sub_menu);
+	$('#link').val(data.link);
 }
 
 function emptyFormData() {
 	$('#id').val('');
-	$('#nama_menu').val('');
-	$('#style_menu').val('');
-	$('#position_menu').val('');
+	$('#nama_sub_menu').val('');
+	$('#id_menu').val('');
+    $('#style_sub_menu').val('');
+    $('#position_sub_menu').val('');
+    $('#grup_sub_menu').val('');
+	$('#link').val('');
 }
 
 function showModalBoxDelete(rowid) {
