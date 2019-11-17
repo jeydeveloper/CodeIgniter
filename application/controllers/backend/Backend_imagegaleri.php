@@ -5,6 +5,8 @@ class Backend_imagegaleri extends CI_Controller {
 	public function index()
 	{
 		$data['api_url'] = base_url('api/image_galeri');
+		$data['api_url_upload_image'] = base_url('backend/Backend_imagegaleri/upload');
+		$data['src_image'] = base_url(DIR_UPLOAD_IMAGE_GALLERY);
 		$data['page_title'] = 'List Menu';
 		$data['column_list'] = $this->get_show_column();
 		$this->load->view('backend/header');
@@ -45,5 +47,10 @@ class Backend_imagegaleri extends CI_Controller {
 		);
 
 		return $column_list;
+	}
+	public function upload()
+	{
+		$ret = uploadImage(DIR_UPLOAD_IMAGE_GALLERY);
+		echo json_encode($ret);
 	}
 }

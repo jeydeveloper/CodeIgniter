@@ -140,6 +140,7 @@ MYAPP.doFormSubmitUpload = (function() {
 		div_errmsg.hide();
   		var url         = listparam.url_ajax_action,
 			dataType    = listparam.data_type,
+			method    	= listparam.method || 'POST',
 			param       = $(listparam.formid).serialize(),
 			callback    = listparam.callback;
 
@@ -148,7 +149,7 @@ MYAPP.doFormSubmitUpload = (function() {
 			param = param + '&filenames[]=' + value;
 		});
 		if(enbl_btn_process == true) {
-			MYAPP.doAjax.process(url, param, callback, dataType);
+			MYAPP.doAjax.process(url, param, callback, dataType, '', method);
 			enbl_btn_process = false;
 		}
     }

@@ -60,9 +60,14 @@ class Image_galeri extends REST_Controller {
     function index_post() { // post data menu
        	$data = array(
 		   'nama_image_galeri' => $this->post('nama_image_galeri'),
-		   'url_image_galeri' => $this->post('url_image_galeri'),
 		   'keterangan_image_galeri' => $this->post('keterangan_image_galeri'),
 		);
+
+        $image = $this->post('filenames');
+        if(!empty($image[0])) {
+            $data['url_image_galeri'] = $image[0];
+        }
+
 		$insert = $this->imagegaleri_model->insert($data);
 		if ($insert) {
 		   $this->response(array('status' => 'success'), 200);
@@ -75,9 +80,14 @@ class Image_galeri extends REST_Controller {
 		$id = $this->put('id');
 		$data = array(
 			'nama_image_galeri' => $this->put('nama_image_galeri'),
-		   	'url_image_galeri' => $this->put('url_image_galeri'),
 		   	'keterangan_image_galeri' => $this->put('keterangan_image_galeri'),
 		);
+
+        $image = $this->put('filenames');
+        if(!empty($image[0])) {
+            $data['url_image_galeri'] = $image[0];
+        }
+
 		$this->imagegaleri_model->where('id_image_galeri = "'.$id.'"');
 		$update = $this->imagegaleri_model->update($data);
 		if ($update) {
@@ -103,10 +113,15 @@ class Image_galeri extends REST_Controller {
 		$start = $this->get('start');
 		foreach ($data as $key => $value) {
 			$start += 1;
+            $url = '';
+            if(!empty($value->url_image_galeri)) {
+                $src = base_url(DIR_UPLOAD_IMAGE_GALLERY.$value->url_image_galeri);
+                $url = '<a href="'.$src.'" target="_blank">'.$src.'</a>';
+            }
 			$ret[$key] = [
 				$start,
 				$value->nama_image_galeri,
-				$value->url_image_galeri,
+				$url,
 				$value->keterangan_image_galeri,
 				'<a onclick="doFormEdit('.$value->id_image_galeri.');return false;" href="#" class="btn btn-xs btn-success">EDIT <i class="glyph-icon icon-pencil-square-o"></i></a> <a onclick="showModalBoxDelete('.$value->id_image_galeri.');return false;" href="#" class="btn btn-xs btn-danger">DELETE <i class="glyph-icon icon-close"></i></a>',
 			];

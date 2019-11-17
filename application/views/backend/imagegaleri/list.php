@@ -43,9 +43,10 @@
 	                </div>
 	            </div>
 	            <div class="form-group">
-	                <label class="col-sm-3 control-label">URL</label>
+	                <label class="col-sm-3 control-label">Image</label>
 	                <div class="col-sm-6">
-	                	<input name="url_image_galeri" id="url_image_galeri" type="text" class="form-control" placeholder="URL..." />
+                        <img id="url_image_galeri_src" src="" width="200">
+	                	<input type="file" name="url_image_galeri" id="url_image_galeri" class="form-control" placeholder="Image..." />
 	                </div>
 	            </div>
 	            <div class="form-group">
@@ -93,6 +94,15 @@ var myowndatatable = '';
 
 var enbl_btn_process = true;
 
+var files;
+
+$('input[type=file]').on('change', prepareUpload);
+
+function prepareUpload(event)
+{
+    files = event.target.files;
+}
+
 var param_list = {
     'formid'            : '#dynamic_form',
     'panel_form'        : '#panel_form',
@@ -122,6 +132,30 @@ var param_list = {
             });
         }
     },
+};
+
+var param_file = {
+    'formid'            : '#dynamic_form',
+    'panel_form'        : '#panel_form',
+    'url_ajax_action'   : '<?php echo $api_url_upload_image; ?>',
+    'dynamic_btn_close' : '#dynamic_btn_close',
+    'btn_submit'        : '#dynamic_btn_process',
+    'div_errmsg'        : '#dynamic_errmsg',
+    'parameter'         : '',
+    'method'            : '',
+    'callback'          : function(data) {
+        if(data.err_msg == '') {
+            if($('#id').val() != '') param_list.method = 'PUT';
+            MYAPP.doFormSubmitUpload.process(param_list, data);
+        } else {
+            $.jGrowl(data.err_msg, {
+                sticky: false,
+                position: 'top-right',
+                theme: 'bg-green'
+            });
+            $(param_list.dynamic_btn_close).trigger('click');
+        }
+    }
 };
 
 $(document).ready(function() {
@@ -160,12 +194,13 @@ $(document).ready(function() {
     });
 
     $(param_list.formid).submit(function(){
-        MYAPP.doFormSubmit.process(param_list);
+        MYAPP.doFormSubmitUploadTmp.process(param_file, files);
         return false;
     });
 });
 
 function doFormEdit(rowid) {
+    emptyFormData();
 	$(param_list.panel_form).show();
 	param_list.parameter = {'id' : rowid};
 	param_list.method = 'GET';
@@ -182,7 +217,7 @@ function doFormEdit(rowid) {
 function fillFormData(data) {
 	$('#id').val(data.id_image_galeri);
 	$('#nama_image_galeri').val(data.nama_image_galeri);
-	$('#url_image_galeri').val(data.url_image_galeri);
+	$('#url_image_galeri_src').attr('src', '<?php echo $src_image; ?>'+data.url_image_galeri);
 	$('#keterangan_image_galeri').val(data.keterangan_image_galeri);
 }
 
@@ -191,6 +226,7 @@ function emptyFormData() {
 	$('#nama_image_galeri').val('');
 	$('#url_image_galeri').val('');
 	$('#keterangan_image_galeri').val('');
+    $('#url_image_galeri_src').attr('src', '');
 }
 
 function showModalBoxDelete(rowid) {
